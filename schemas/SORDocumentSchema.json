@@ -1,0 +1,473 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SOR Document Schema",
+  "description": "Schema defining the structure and properties of Statement of Requirements (SOR) documents in the library",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "projectType",
+    "dateCreated",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the document",
+      "pattern": "^SOR-[0-9]{4}-[0-9]{4}$",
+      "examples": ["SOR-2024-0001", "SOR-2025-0042"]
+    },
+    "title": {
+      "type": "string",
+      "description": "Document title or project name",
+      "minLength": 5,
+      "maxLength": 200,
+      "examples": [
+        "Healthcare CRM Implementation - Regional Hospital Network",
+        "Cloud Migration Strategy for Financial Services Platform"
+      ]
+    },
+    "projectType": {
+      "type": "string",
+      "description": "Type or category of the project",
+      "enum": [
+        "Software Development",
+        "Infrastructure",
+        "Data Migration",
+        "System Integration",
+        "Cloud Migration",
+        "Digital Transformation",
+        "Platform Modernization",
+        "Security Enhancement",
+        "Custom Application",
+        "ERP Implementation",
+        "CRM Implementation",
+        "Business Intelligence",
+        "IoT Solution",
+        "Mobile Application",
+        "Web Application",
+        "API Development",
+        "DevOps Implementation",
+        "Network Upgrade",
+        "Other"
+      ]
+    },
+    "industry": {
+      "type": "string",
+      "description": "Industry sector of the project",
+      "enum": [
+        "Healthcare",
+        "Financial Services",
+        "Retail",
+        "Manufacturing",
+        "Technology",
+        "Education",
+        "Government",
+        "Energy",
+        "Telecommunications",
+        "Transportation",
+        "Real Estate",
+        "Media & Entertainment",
+        "Hospitality",
+        "Agriculture",
+        "Non-Profit",
+        "Professional Services",
+        "Other"
+      ]
+    },
+    "complexity": {
+      "type": "string",
+      "description": "Project complexity level",
+      "enum": ["low", "medium", "high", "critical"],
+      "default": "medium"
+    },
+    "description": {
+      "type": "string",
+      "description": "Comprehensive description of the project and its requirements",
+      "minLength": 50,
+      "maxLength": 5000
+    },
+    "objectives": {
+      "type": "array",
+      "description": "Key objectives and goals of the project",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "maxItems": 20
+    },
+    "scope": {
+      "type": "object",
+      "description": "Project scope details",
+      "properties": {
+        "inScope": {
+          "type": "array",
+          "description": "Items included in the project scope",
+          "items": {
+            "type": "string"
+          }
+        },
+        "outOfScope": {
+          "type": "array",
+          "description": "Items explicitly excluded from the project scope",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "requirements": {
+      "type": "object",
+      "description": "Detailed requirements categorized by type",
+      "properties": {
+        "functional": {
+          "type": "array",
+          "description": "Functional requirements",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "priority": {
+                "type": "string",
+                "enum": ["must-have", "should-have", "could-have", "wont-have"]
+              }
+            }
+          }
+        },
+        "nonFunctional": {
+          "type": "array",
+          "description": "Non-functional requirements (performance, security, scalability, etc.)",
+          "items": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "string",
+                "enum": [
+                  "Performance",
+                  "Security",
+                  "Scalability",
+                  "Reliability",
+                  "Maintainability",
+                  "Usability",
+                  "Compliance",
+                  "Accessibility",
+                  "Other"
+                ]
+              },
+              "description": {
+                "type": "string"
+              },
+              "priority": {
+                "type": "string",
+                "enum": ["must-have", "should-have", "could-have", "wont-have"]
+              }
+            }
+          }
+        },
+        "technical": {
+          "type": "array",
+          "description": "Technical requirements and specifications",
+          "items": {
+            "type": "object",
+            "properties": {
+              "technology": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "requirement": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "stakeholders": {
+      "type": "array",
+      "description": "Project stakeholders and their roles",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "organization": {
+            "type": "string"
+          },
+          "contact": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "description": "Budget information",
+      "properties": {
+        "currency": {
+          "type": "string",
+          "default": "USD",
+          "examples": ["USD", "EUR", "GBP", "CAD"]
+        },
+        "estimatedTotal": {
+          "type": "number",
+          "description": "Estimated total budget"
+        },
+        "range": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            }
+          }
+        },
+        "breakdown": {
+          "type": "array",
+          "description": "Budget breakdown by category",
+          "items": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "string"
+              },
+              "amount": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    },
+    "timeline": {
+      "type": "object",
+      "description": "Project timeline and milestones",
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "duration": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string",
+              "enum": ["days", "weeks", "months", "years"]
+            }
+          }
+        },
+        "milestones": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "date": {
+                "type": "string",
+                "format": "date"
+              },
+              "deliverables": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "technologies": {
+      "type": "array",
+      "description": "Technologies, tools, and platforms used or required",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "Programming Language",
+              "Framework",
+              "Database",
+              "Cloud Platform",
+              "DevOps Tool",
+              "Security Tool",
+              "Testing Tool",
+              "Integration",
+              "Other"
+            ]
+          },
+          "version": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "risks": {
+      "type": "array",
+      "description": "Identified risks and mitigation strategies",
+      "items": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "impact": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"]
+          },
+          "probability": {
+            "type": "string",
+            "enum": ["low", "medium", "high"]
+          },
+          "mitigation": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "complianceRequirements": {
+      "type": "array",
+      "description": "Compliance and regulatory requirements",
+      "items": {
+        "type": "string"
+      },
+      "examples": [
+        ["HIPAA", "GDPR", "SOC 2", "PCI-DSS", "ISO 27001"]
+      ]
+    },
+    "dateCreated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the document was created"
+    },
+    "dateModified": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the document was last modified"
+    },
+    "version": {
+      "type": "string",
+      "description": "Document version",
+      "pattern": "^\\d+\\.\\d+(\\.\\d+)?$",
+      "examples": ["1.0", "2.1", "1.0.5"]
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of the document",
+      "enum": [
+        "draft",
+        "under-review",
+        "approved",
+        "active",
+        "completed",
+        "archived"
+      ]
+    },
+    "author": {
+      "type": "object",
+      "description": "Document author information",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "organization": {
+          "type": "string"
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Tags for categorization and search",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "relatedDocuments": {
+      "type": "array",
+      "description": "IDs of related SOR documents",
+      "items": {
+        "type": "string"
+      }
+    },
+    "attachments": {
+      "type": "array",
+      "description": "Additional attachments and supporting documents",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "size": {
+            "type": "number",
+            "description": "File size in bytes"
+          }
+        }
+      }
+    },
+    "searchMetadata": {
+      "type": "object",
+      "description": "Metadata used for AI-powered similarity search",
+      "properties": {
+        "keyTerms": {
+          "type": "array",
+          "description": "Key terms extracted for search indexing",
+          "items": {
+            "type": "string"
+          }
+        },
+        "embedding": {
+          "type": "array",
+          "description": "Vector embedding for semantic similarity search",
+          "items": {
+            "type": "number"
+          }
+        },
+        "lastIndexed": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

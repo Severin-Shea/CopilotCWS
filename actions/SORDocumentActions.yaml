@@ -1,0 +1,288 @@
+openapi: 3.0.1
+info:
+  title: SOR Document Retrieval Actions
+  description: Actions for searching and retrieving similar SOR documents using AI-powered similarity matching
+  version: 1.0.0
+
+servers:
+  - url: https://api.yourorganization.com/sor-documents
+    description: Production API server
+
+paths:
+  /search/similar:
+    post:
+      operationId: SearchSimilarDocuments
+      summary: Search for similar SOR documents
+      description: |
+        Searches the document library for SOR documents similar to the provided project details.
+        Uses AI/ML to calculate semantic similarity and returns top N matches.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - projectDetails
+                - topN
+              properties:
+                projectDetails:
+                  type: string
+                  description: Detailed description of the new project including name, type, requirements, objectives, specifications, audience, budget, and timeline
+                  example: "Project Alpha: Enterprise CRM implementation for healthcare sector. Requirements include HIPAA compliance, multi-tenant architecture, patient portal, appointment scheduling, and billing integration. Target audience is mid-size hospitals with 100-500 beds. Budget range $2-5M. Timeline 18 months."
+                topN:
+                  type: integer
+                  minimum: 1
+                  maximum: 10
+                  default: 5
+                  description: Number of most similar documents to return
+                filters:
+                  type: object
+                  description: Optional filters to narrow search
+                  properties:
+                    projectType:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by project types
+                    industry:
+                      type: array
+                      items:
+                        type: string
+                      description: Filter by industry sectors
+                    complexity:
+                      type: string
+                      enum: [low, medium, high, critical]
+                      description: Filter by project complexity
+                    dateRange:
+                      type: object
+                      properties:
+                        startDate:
+                          type: string
+                          format: date
+                        endDate:
+                          type: string
+                          format: date
+      responses:
+        '200':
+          description: Successfully retrieved similar documents
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  documents:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Unique document identifier
+                        title:
+                          type: string
+                          description: Document title
+                        projectType:
+                          type: string
+                          description: Type of project
+                        industry:
+                          type: string
+                          description: Industry sector
+                        complexity:
+                          type: string
+                          description: Project complexity level
+                        dateCreated:
+                          type: string
+                          format: date
+                          description: Document creation date
+                        similarityScore:
+                          type: number
+                          format: float
+                          description: Similarity score (0-100)
+                        keyTerms:
+                          type: array
+                          items:
+                            type: string
+                          description: Key terms extracted from document
+                  totalResults:
+                    type: integer
+                    description: Total number of documents found
+                  searchMetadata:
+                    type: object
+                    properties:
+                      searchTime:
+                        type: number
+                        description: Search execution time in milliseconds
+                      algorithm:
+                        type: string
+                        description: Similarity algorithm used
+        '400':
+          description: Invalid request parameters
+        '500':
+          description: Internal server error
+
+  /documents/{documentId}/details:
+    get:
+      operationId: GetDocumentDetails
+      summary: Get detailed information about a specific document
+      description: |
+        Retrieves comprehensive details about a SOR document including summary,
+        relevance explanation, and download link. Uses AI to generate contextual
+        explanations grounded in the document content.
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique identifier of the document
+        - name: contextProjectDetails
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Original project details to generate contextual relevance explanation
+      responses:
+        '200':
+          description: Document details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Document ID
+                  title:
+                    type: string
+                    description: Document title
+                  summary:
+                    type: string
+                    description: AI-generated summary of the document (200-300 words)
+                  link:
+                    type: string
+                    format: uri
+                    description: Direct link to view/download the document
+                  similarityScore:
+                    type: number
+                    format: float
+                    description: Similarity score to the query
+                  relevanceExplanation:
+                    type: string
+                    description: AI-generated explanation of why this document is relevant and useful as a reference
+                  metadata:
+                    type: object
+                    properties:
+                      projectType:
+                        type: string
+                      industry:
+                        type: string
+                      complexity:
+                        type: string
+                      dateCreated:
+                        type: string
+                        format: date
+                      author:
+                        type: string
+                      version:
+                        type: string
+                      status:
+                        type: string
+                      tags:
+                        type: array
+                        items:
+                          type: string
+                  keyInsights:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        category:
+                          type: string
+                          description: Insight category (e.g., "Requirements", "Architecture", "Budget")
+                        insight:
+                          type: string
+                          description: Specific insight from the document
+                  relatedDocuments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        title:
+                          type: string
+                        relationship:
+                          type: string
+                          description: How this document relates to the main one
+        '404':
+          description: Document not found
+        '500':
+          description: Internal server error
+
+  /documents/upload:
+    post:
+      operationId: UploadNewDocument
+      summary: Upload a new SOR document to the library
+      description: Uploads a new SOR document with metadata for future similarity searches
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+                - metadata
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The SOR document file
+                metadata:
+                  type: object
+                  description: Document metadata
+                  required:
+                    - title
+                    - projectType
+                  properties:
+                    title:
+                      type: string
+                    projectType:
+                      type: string
+                    industry:
+                      type: string
+                    complexity:
+                      type: string
+                    description:
+                      type: string
+                    tags:
+                      type: array
+                      items:
+                        type: string
+      responses:
+        '201':
+          description: Document uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  documentId:
+                    type: string
+                  message:
+                    type: string
+        '400':
+          description: Invalid request
+        '500':
+          description: Internal server error
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []

@@ -1,0 +1,251 @@
+{
+  "id": "SOR-2024-0001",
+  "title": "Healthcare Patient Portal Implementation - Metro General Hospital",
+  "projectType": "Web Application",
+  "industry": "Healthcare",
+  "complexity": "high",
+  "description": "Implementation of a comprehensive patient portal system for Metro General Hospital to improve patient engagement, reduce administrative overhead, and provide 24/7 access to health records, appointments, and billing information. The portal will integrate with existing Epic EHR system and support HIPAA-compliant secure messaging between patients and healthcare providers.",
+  "objectives": [
+    "Enable patients to view their health records, lab results, and imaging reports online",
+    "Allow patients to schedule, reschedule, and cancel appointments",
+    "Provide secure messaging between patients and care teams",
+    "Enable online bill payment and insurance claim tracking",
+    "Reduce phone call volume to administrative staff by 40%",
+    "Improve patient satisfaction scores by 25%",
+    "Ensure HIPAA compliance and data security"
+  ],
+  "scope": {
+    "inScope": [
+      "Patient registration and authentication",
+      "Health record viewing (labs, medications, allergies, immunizations)",
+      "Appointment scheduling and management",
+      "Secure messaging with providers",
+      "Bill payment integration",
+      "Mobile-responsive design",
+      "Integration with Epic EHR",
+      "Multi-factor authentication",
+      "Patient education materials library"
+    ],
+    "outOfScope": [
+      "Telemedicine video consultations (Phase 2)",
+      "Prescription refill requests (existing workflow remains)",
+      "Family member access proxy accounts (Phase 2)",
+      "Integration with wearable devices (future consideration)"
+    ]
+  },
+  "requirements": {
+    "functional": [
+      {
+        "id": "F001",
+        "description": "Patients must be able to create accounts using email verification",
+        "priority": "must-have"
+      },
+      {
+        "id": "F002",
+        "description": "System must display lab results within 2 hours of being finalized in Epic",
+        "priority": "must-have"
+      },
+      {
+        "id": "F003",
+        "description": "Users must be able to search available appointment slots by provider, specialty, and date range",
+        "priority": "must-have"
+      },
+      {
+        "id": "F004",
+        "description": "Secure messaging must support file attachments up to 10MB",
+        "priority": "should-have"
+      }
+    ],
+    "nonFunctional": [
+      {
+        "category": "Security",
+        "description": "Must comply with HIPAA security requirements including encryption at rest and in transit",
+        "priority": "must-have"
+      },
+      {
+        "category": "Performance",
+        "description": "Page load times must be under 2 seconds for 95% of requests",
+        "priority": "must-have"
+      },
+      {
+        "category": "Scalability",
+        "description": "System must support 50,000 concurrent users",
+        "priority": "must-have"
+      },
+      {
+        "category": "Accessibility",
+        "description": "Must meet WCAG 2.1 Level AA compliance",
+        "priority": "must-have"
+      }
+    ],
+    "technical": [
+      {
+        "technology": "Epic EHR",
+        "version": "2023",
+        "requirement": "Integration using Epic FHIR APIs"
+      },
+      {
+        "technology": "Azure Cloud",
+        "version": "N/A",
+        "requirement": "Host all infrastructure in Azure Government Cloud"
+      }
+    ]
+  },
+  "stakeholders": [
+    {
+      "name": "Dr. Sarah Johnson",
+      "role": "Chief Medical Information Officer",
+      "organization": "Metro General Hospital",
+      "contact": "sjohnson@metrogh.org"
+    },
+    {
+      "name": "Michael Chen",
+      "role": "IT Director",
+      "organization": "Metro General Hospital",
+      "contact": "mchen@metrogh.org"
+    }
+  ],
+  "budget": {
+    "currency": "USD",
+    "estimatedTotal": 3500000,
+    "range": {
+      "min": 3000000,
+      "max": 4000000
+    },
+    "breakdown": [
+      {
+        "category": "Software Development",
+        "amount": 2000000
+      },
+      {
+        "category": "Epic Integration",
+        "amount": 800000
+      },
+      {
+        "category": "Infrastructure",
+        "amount": 400000
+      },
+      {
+        "category": "Security & Compliance",
+        "amount": 300000
+      }
+    ]
+  },
+  "timeline": {
+    "startDate": "2024-03-01",
+    "endDate": "2025-02-28",
+    "duration": {
+      "value": 12,
+      "unit": "months"
+    },
+    "milestones": [
+      {
+        "name": "Design Phase Complete",
+        "date": "2024-05-31",
+        "deliverables": ["UI/UX designs", "Technical architecture", "Integration specifications"]
+      },
+      {
+        "name": "Phase 1 Development Complete",
+        "date": "2024-09-30",
+        "deliverables": ["Patient registration", "Health records viewing", "Appointment scheduling"]
+      },
+      {
+        "name": "Phase 2 Development Complete",
+        "date": "2024-12-31",
+        "deliverables": ["Secure messaging", "Bill payment", "Mobile optimization"]
+      },
+      {
+        "name": "Go-Live",
+        "date": "2025-02-28",
+        "deliverables": ["Production deployment", "User training", "Support documentation"]
+      }
+    ]
+  },
+  "technologies": [
+    {
+      "name": "React",
+      "category": "Framework",
+      "version": "18.x",
+      "purpose": "Frontend web application framework"
+    },
+    {
+      "name": "Node.js",
+      "category": "Framework",
+      "version": "20.x LTS",
+      "purpose": "Backend API services"
+    },
+    {
+      "name": "Azure SQL Database",
+      "category": "Database",
+      "version": "Latest",
+      "purpose": "Primary data storage"
+    },
+    {
+      "name": "Azure Government Cloud",
+      "category": "Cloud Platform",
+      "version": "N/A",
+      "purpose": "HIPAA-compliant hosting infrastructure"
+    },
+    {
+      "name": "Epic FHIR API",
+      "category": "Integration",
+      "version": "R4",
+      "purpose": "EHR integration"
+    }
+  ],
+  "risks": [
+    {
+      "description": "Epic API integration may be more complex than anticipated",
+      "impact": "high",
+      "probability": "medium",
+      "mitigation": "Engage Epic integration specialists early; allocate 20% contingency time"
+    },
+    {
+      "description": "HIPAA compliance audit could reveal gaps",
+      "impact": "critical",
+      "probability": "low",
+      "mitigation": "Conduct third-party security assessment before go-live"
+    }
+  ],
+  "complianceRequirements": [
+    "HIPAA",
+    "HITECH Act",
+    "State Health Privacy Laws"
+  ],
+  "dateCreated": "2024-01-15T10:00:00Z",
+  "dateModified": "2024-01-20T14:30:00Z",
+  "version": "1.2",
+  "status": "approved",
+  "author": {
+    "name": "Jennifer Martinez",
+    "email": "jmartinez@metrogh.org",
+    "organization": "Metro General Hospital"
+  },
+  "tags": [
+    "healthcare",
+    "patient-portal",
+    "epic-integration",
+    "hipaa",
+    "web-application",
+    "azure"
+  ],
+  "relatedDocuments": [
+    "SOR-2023-0045",
+    "SOR-2024-0003"
+  ],
+  "searchMetadata": {
+    "keyTerms": [
+      "healthcare",
+      "patient portal",
+      "EHR integration",
+      "Epic",
+      "HIPAA",
+      "appointment scheduling",
+      "secure messaging",
+      "health records",
+      "bill payment",
+      "Azure Government Cloud"
+    ],
+    "lastIndexed": "2024-01-20T15:00:00Z"
+  }
+}
