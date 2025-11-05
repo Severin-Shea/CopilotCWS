@@ -1,0 +1,160 @@
+kind: AdaptiveDialog
+beginDialog:
+  kind: OnRecognizedIntent
+  intent:
+    displayName: Find Similar SOR Documents
+    triggerQueries:
+      - Find similar SOR documents
+      - Search for similar project documents
+      - Show me related SOR documents
+      - Need reference documents for my project
+      - Find documents similar to my project
+
+  actions:
+    # Step 1: Capture project details from user
+    - kind: Question
+      id: captureProjectDetails
+      variable: Topic.ProjectDetails
+      prompt: |
+        Please provide details about your new project. This will help me find the most relevant SOR documents. 
+        
+        You can include:
+        - Project name or title
+        - Project type or category
+        - Key requirements or objectives
+        - Technical specifications
+        - Target audience or stakeholders
+        - Budget range (if applicable)
+        - Timeline or milestones
+      interruptible: true
+      
+    # Step 2: Ask for number of similar documents to retrieve
+    - kind: Question
+      id: captureTopN
+      variable: Topic.TopN
+      prompt: "How many similar documents would you like me to find? (Enter a number between 1 and 10)"
+      interruptible: true
+      
+    # Step 3: Call action to search for similar documents
+    - kind: InvokeAction
+      id: searchSimilarDocs
+      actionId: SearchSimilarDocuments
+      inputs:
+        projectDetails: =Topic.ProjectDetails
+        topN: =Topic.TopN
+      outputs:
+        similarDocuments: Topic.SimilarDocuments
+        
+    # Step 4: Process and present results
+    - kind: ConditionGroup
+      id: checkResults
+      conditions:
+        - condition: =count(Topic.SimilarDocuments) > 0
+          actions:
+            # Display introduction message
+            - kind: SendActivity
+              id: introMessage
+              activity: |
+                I found ${count(Topic.SimilarDocuments)} similar SOR documents that could be valuable references for your project. Let me provide you with detailed information about each one.
+                
+            # Loop through each document and display details
+            - kind: ForEach
+              id: displayDocuments
+              itemsProperty: Topic.SimilarDocuments
+              actions:
+                - kind: InvokeAction
+                  id: getDocumentDetails
+                  actionId: GetDocumentDetails
+                  inputs:
+                    documentId: =${foreach.value.id}
+                  outputs:
+                    documentSummary: Topic.CurrentDocSummary
+                    documentLink: Topic.CurrentDocLink
+                    similarityScore: Topic.CurrentSimilarity
+                    relevanceExplanation: Topic.CurrentExplanation
+                    
+                - kind: SendActivity
+                  id: displayDocInfo
+                  activity: |
+                    ---
+                    
+                    **Document ${foreach.index + 1}: ${foreach.value.title}**
+                    
+                    **Similarity Score:** ${Topic.CurrentSimilarity}%
+                    
+                    **Summary:**
+                    ${Topic.CurrentDocSummary}
+                    
+                    **Why this is a good reference:**
+                    ${Topic.CurrentExplanation}
+                    
+                    **Document Link:** [View Document](${Topic.CurrentDocLink})
+                    
+                    **Key Properties:**
+                    - Project Type: ${foreach.value.projectType}
+                    - Industry: ${foreach.value.industry}
+                    - Complexity: ${foreach.value.complexity}
+                    - Date Created: ${foreach.value.dateCreated}
+                    
+            # Offer to search again or provide more help
+            - kind: Question
+              id: askForMoreHelp
+              variable: Topic.NeedMoreHelp
+              prompt: "Would you like to search for more documents or refine your search? (Yes/No)"
+              interruptible: true
+              
+            - kind: ConditionGroup
+              id: checkMoreHelp
+              conditions:
+                - condition: =toLower(Topic.NeedMoreHelp) == 'yes'
+                  actions:
+                    - kind: RedirectToId
+                      id: redirectToStart
+                      targetDialogId: captureProjectDetails
+                      
+                - condition: =toLower(Topic.NeedMoreHelp) == 'no'
+                  actions:
+                    - kind: SendActivity
+                      id: farewellMessage
+                      activity: |
+                        Great! I hope these documents help you create your SOR. If you need any more assistance, feel free to ask!
+                        
+        - condition: =count(Topic.SimilarDocuments) == 0
+          actions:
+            - kind: SendActivity
+              id: noResultsMessage
+              activity: |
+                I couldn't find any documents matching your criteria. This might be because:
+                - Your project is very unique
+                - The search criteria were too specific
+                - The document library needs to be updated
+                
+                Would you like to try again with different project details?
+                
+            - kind: Question
+              id: askToRetry
+              variable: Topic.RetrySearch
+              prompt: "Try again? (Yes/No)"
+              interruptible: true
+              
+            - kind: ConditionGroup
+              id: checkRetry
+              conditions:
+                - condition: =toLower(Topic.RetrySearch) == 'yes'
+                  actions:
+                    - kind: RedirectToId
+                      id: redirectToStartAgain
+                      targetDialogId: captureProjectDetails
+
+metadata:
+  schemaVersion: 1.0
+  description: "Topic for finding and retrieving similar SOR documents based on project details. Uses AI to provide grounded recommendations from historical SOR documents."
+  category: Document Management
+  author: Copilot Studio Agent
+  lastModified: 2025-11-05
+  tags:
+    - SOR
+    - Document Retrieval
+    - Similarity Search
+    - AI-Grounded
+    - Project Reference

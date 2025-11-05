@@ -1,0 +1,293 @@
+{
+  "id": "SOR-2024-0015",
+  "title": "Cloud Migration Strategy - Regional Banking Platform",
+  "projectType": "Cloud Migration",
+  "industry": "Financial Services",
+  "complexity": "critical",
+  "description": "Comprehensive cloud migration project to move Regional Community Bank's core banking platform from on-premises infrastructure to Azure Cloud. The migration includes customer data, transaction processing systems, online banking applications, and integration with third-party payment processors. The project emphasizes zero downtime migration, robust disaster recovery, and compliance with financial industry regulations.",
+  "objectives": [
+    "Migrate all core banking systems to Azure Cloud with zero customer-facing downtime",
+    "Reduce infrastructure operational costs by 35%",
+    "Improve system availability to 99.99%",
+    "Enable scalability to support 3x transaction volume growth",
+    "Implement automated disaster recovery with RPO < 15 minutes and RTO < 1 hour",
+    "Maintain PCI-DSS and SOC 2 compliance throughout and after migration",
+    "Enhance security posture with cloud-native security tools"
+  ],
+  "scope": {
+    "inScope": [
+      "Core banking system migration (Fiserv Premier)",
+      "Online banking web and mobile applications",
+      "ATM network management system",
+      "Payment processing integrations (ACH, wire transfers, card processing)",
+      "Customer and account databases (15TB total)",
+      "Document management system",
+      "Reporting and analytics platform",
+      "Network and security infrastructure redesign",
+      "Disaster recovery and business continuity setup",
+      "Staff training on cloud operations"
+    ],
+    "outOfScope": [
+      "Branch office networking infrastructure (remains on-premises)",
+      "Physical security systems",
+      "HVAC and facilities management systems",
+      "Replacement of legacy mainframe (to be addressed in separate project)",
+      "Third-party vendor system migrations (vendor responsibility)"
+    ]
+  },
+  "requirements": {
+    "functional": [
+      {
+        "id": "F001",
+        "description": "All customer transactions must continue processing during migration windows",
+        "priority": "must-have"
+      },
+      {
+        "id": "F002",
+        "description": "Automated failback capability to on-premises in case of cloud issues",
+        "priority": "must-have"
+      },
+      {
+        "id": "F003",
+        "description": "Real-time data synchronization between on-premises and cloud during transition period",
+        "priority": "must-have"
+      },
+      {
+        "id": "F004",
+        "description": "Automated backup and recovery testing weekly",
+        "priority": "must-have"
+      }
+    ],
+    "nonFunctional": [
+      {
+        "category": "Security",
+        "description": "All data must be encrypted at rest using AES-256 and in transit using TLS 1.3",
+        "priority": "must-have"
+      },
+      {
+        "category": "Performance",
+        "description": "Transaction processing latency must not increase by more than 10% post-migration",
+        "priority": "must-have"
+      },
+      {
+        "category": "Reliability",
+        "description": "System availability target of 99.99% (52 minutes downtime per year)",
+        "priority": "must-have"
+      },
+      {
+        "category": "Compliance",
+        "description": "Maintain PCI-DSS Level 1, SOC 2 Type II, and state banking regulations compliance",
+        "priority": "must-have"
+      }
+    ],
+    "technical": [
+      {
+        "technology": "Azure",
+        "version": "Latest",
+        "requirement": "Multi-region deployment (Primary: East US, DR: West US)"
+      },
+      {
+        "technology": "Fiserv Premier",
+        "version": "19.x",
+        "requirement": "Cloud-compatible version with Azure certification"
+      },
+      {
+        "technology": "Azure Site Recovery",
+        "version": "Latest",
+        "requirement": "DR orchestration and failover automation"
+      }
+    ]
+  },
+  "stakeholders": [
+    {
+      "name": "Robert Williams",
+      "role": "Chief Technology Officer",
+      "organization": "Regional Community Bank",
+      "contact": "rwilliams@rcbank.com"
+    },
+    {
+      "name": "Lisa Anderson",
+      "role": "Chief Information Security Officer",
+      "organization": "Regional Community Bank",
+      "contact": "landerson@rcbank.com"
+    },
+    {
+      "name": "David Thompson",
+      "role": "VP of Operations",
+      "organization": "Regional Community Bank",
+      "contact": "dthompson@rcbank.com"
+    }
+  ],
+  "budget": {
+    "currency": "USD",
+    "estimatedTotal": 8500000,
+    "range": {
+      "min": 7500000,
+      "max": 10000000
+    },
+    "breakdown": [
+      {
+        "category": "Azure Infrastructure (3 years)",
+        "amount": 3600000
+      },
+      {
+        "category": "Migration Services",
+        "amount": 2500000
+      },
+      {
+        "category": "Security & Compliance",
+        "amount": 1200000
+      },
+      {
+        "category": "Fiserv Cloud License",
+        "amount": 800000
+      },
+      {
+        "category": "Training & Change Management",
+        "amount": 400000
+      }
+    ]
+  },
+  "timeline": {
+    "startDate": "2024-06-01",
+    "endDate": "2025-11-30",
+    "duration": {
+      "value": 18,
+      "unit": "months"
+    },
+    "milestones": [
+      {
+        "name": "Assessment & Planning Complete",
+        "date": "2024-08-31",
+        "deliverables": ["Migration assessment report", "Detailed migration plan", "Risk mitigation strategy"]
+      },
+      {
+        "name": "Pilot Migration Complete",
+        "date": "2024-11-30",
+        "deliverables": ["Non-production environment migrated", "Performance testing complete", "Runbook finalized"]
+      },
+      {
+        "name": "Production Database Migration",
+        "date": "2025-05-31",
+        "deliverables": ["Customer databases migrated", "Data validation complete", "Dual-run period initiated"]
+      },
+      {
+        "name": "Full Cutover & Go-Live",
+        "date": "2025-11-30",
+        "deliverables": ["All systems migrated", "On-premises decommissioned", "Post-migration optimization"]
+      }
+    ]
+  },
+  "technologies": [
+    {
+      "name": "Azure Virtual Machines",
+      "category": "Cloud Platform",
+      "version": "Latest",
+      "purpose": "Application hosting"
+    },
+    {
+      "name": "Azure SQL Database",
+      "category": "Database",
+      "version": "Latest",
+      "purpose": "Core banking data storage"
+    },
+    {
+      "name": "Azure ExpressRoute",
+      "category": "Cloud Platform",
+      "version": "N/A",
+      "purpose": "Dedicated network connection to Azure"
+    },
+    {
+      "name": "Azure Site Recovery",
+      "category": "Cloud Platform",
+      "version": "Latest",
+      "purpose": "Disaster recovery orchestration"
+    },
+    {
+      "name": "Azure Security Center",
+      "category": "Security Tool",
+      "version": "Latest",
+      "purpose": "Threat protection and compliance monitoring"
+    },
+    {
+      "name": "Fiserv Premier",
+      "category": "Other",
+      "version": "19.x",
+      "purpose": "Core banking platform"
+    }
+  ],
+  "risks": [
+    {
+      "description": "Data migration may experience unforeseen corruption or data loss",
+      "impact": "critical",
+      "probability": "low",
+      "mitigation": "Multiple backup strategies, extensive testing, rollback procedures"
+    },
+    {
+      "description": "Performance degradation during dual-run period affecting customer experience",
+      "impact": "high",
+      "probability": "medium",
+      "mitigation": "Extensive performance testing, staged migration approach, 24/7 monitoring"
+    },
+    {
+      "description": "Compliance audit failure during or after migration",
+      "impact": "critical",
+      "probability": "low",
+      "mitigation": "Engage compliance consultants, continuous compliance monitoring, third-party audits"
+    },
+    {
+      "description": "Extended downtime due to migration complexity",
+      "impact": "high",
+      "probability": "medium",
+      "mitigation": "Rehearse migration multiple times, implement automated rollback, maintain parallel systems"
+    }
+  ],
+  "complianceRequirements": [
+    "PCI-DSS Level 1",
+    "SOC 2 Type II",
+    "GLBA (Gramm-Leach-Bliley Act)",
+    "State Banking Regulations",
+    "FFIEC Guidance"
+  ],
+  "dateCreated": "2024-04-10T09:00:00Z",
+  "dateModified": "2024-04-25T16:45:00Z",
+  "version": "2.0",
+  "status": "approved",
+  "author": {
+    "name": "Thomas Lee",
+    "email": "tlee@rcbank.com",
+    "organization": "Regional Community Bank"
+  },
+  "tags": [
+    "cloud-migration",
+    "azure",
+    "banking",
+    "financial-services",
+    "fiserv",
+    "disaster-recovery",
+    "pci-dss",
+    "zero-downtime"
+  ],
+  "relatedDocuments": [
+    "SOR-2023-0089",
+    "SOR-2024-0016",
+    "SOR-2024-0022"
+  ],
+  "searchMetadata": {
+    "keyTerms": [
+      "cloud migration",
+      "Azure",
+      "banking",
+      "financial services",
+      "Fiserv",
+      "core banking",
+      "disaster recovery",
+      "PCI-DSS",
+      "zero downtime",
+      "compliance",
+      "ExpressRoute",
+      "data migration"
+    ],
+    "lastIndexed": "2024-04-25T17:00:00Z"
+  }
+}

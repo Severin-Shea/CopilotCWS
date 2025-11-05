@@ -1,0 +1,318 @@
+{
+  "id": "SOR-2024-0032",
+  "title": "E-Commerce Platform Modernization - National Retail Chain",
+  "projectType": "Platform Modernization",
+  "industry": "Retail",
+  "complexity": "high",
+  "description": "Modernization of the existing e-commerce platform for National Retail Chain to support omnichannel retail operations, improve customer experience, and handle peak traffic during holiday seasons. The project involves migrating from a monolithic architecture to microservices, implementing a headless commerce architecture, and integrating with in-store systems for buy-online-pickup-in-store (BOPIS) functionality.",
+  "objectives": [
+    "Increase online conversion rate by 30%",
+    "Support 10x traffic scaling during peak shopping seasons",
+    "Reduce page load times from 4 seconds to under 1 second",
+    "Enable buy-online-pickup-in-store (BOPIS) across 500+ locations",
+    "Implement personalized product recommendations using AI/ML",
+    "Achieve 99.95% uptime during business hours",
+    "Reduce cart abandonment rate by 20%",
+    "Support mobile-first shopping experience"
+  ],
+  "scope": {
+    "inScope": [
+      "Product catalog and search functionality",
+      "Shopping cart and checkout process",
+      "Customer account management",
+      "Order management system integration",
+      "Payment gateway integration (multiple providers)",
+      "Inventory management integration with stores",
+      "BOPIS functionality",
+      "Product recommendation engine",
+      "Mobile app API development",
+      "Customer review and rating system",
+      "Promotional and discount engine",
+      "Analytics and reporting dashboard"
+    ],
+    "outOfScope": [
+      "Mobile app UI development (separate project)",
+      "In-store POS system upgrades",
+      "Supply chain management system",
+      "Warehouse management system",
+      "Customer service chat platform (existing solution retained)",
+      "Email marketing platform (existing solution retained)"
+    ]
+  },
+  "requirements": {
+    "functional": [
+      {
+        "id": "F001",
+        "description": "Real-time inventory sync between online and store systems with 5-minute maximum latency",
+        "priority": "must-have"
+      },
+      {
+        "id": "F002",
+        "description": "Support for guest checkout without account creation",
+        "priority": "must-have"
+      },
+      {
+        "id": "F003",
+        "description": "AI-powered product recommendations based on browsing history and purchase patterns",
+        "priority": "should-have"
+      },
+      {
+        "id": "F004",
+        "description": "Support for multiple payment methods including digital wallets (Apple Pay, Google Pay)",
+        "priority": "must-have"
+      },
+      {
+        "id": "F005",
+        "description": "Real-time order tracking with notifications",
+        "priority": "must-have"
+      }
+    ],
+    "nonFunctional": [
+      {
+        "category": "Performance",
+        "description": "Home page must load in under 1 second on 4G mobile connection",
+        "priority": "must-have"
+      },
+      {
+        "category": "Scalability",
+        "description": "Must handle 100,000 concurrent users during peak traffic",
+        "priority": "must-have"
+      },
+      {
+        "category": "Security",
+        "description": "PCI-DSS compliance for payment processing",
+        "priority": "must-have"
+      },
+      {
+        "category": "Usability",
+        "description": "Mobile-first responsive design with touch-optimized interface",
+        "priority": "must-have"
+      },
+      {
+        "category": "Reliability",
+        "description": "99.95% uptime during business hours (6 AM - 11 PM)",
+        "priority": "must-have"
+      }
+    ],
+    "technical": [
+      {
+        "technology": "Kubernetes",
+        "version": "1.28+",
+        "requirement": "Container orchestration for microservices"
+      },
+      {
+        "technology": "Elasticsearch",
+        "version": "8.x",
+        "requirement": "Product search and catalog indexing"
+      },
+      {
+        "technology": "Redis",
+        "version": "7.x",
+        "requirement": "Session management and caching"
+      }
+    ]
+  },
+  "stakeholders": [
+    {
+      "name": "Amanda Foster",
+      "role": "Chief Digital Officer",
+      "organization": "National Retail Chain",
+      "contact": "afoster@nationalretail.com"
+    },
+    {
+      "name": "Kevin Brooks",
+      "role": "VP of E-Commerce",
+      "organization": "National Retail Chain",
+      "contact": "kbrooks@nationalretail.com"
+    },
+    {
+      "name": "Rachel Green",
+      "role": "Director of IT",
+      "organization": "National Retail Chain",
+      "contact": "rgreen@nationalretail.com"
+    }
+  ],
+  "budget": {
+    "currency": "USD",
+    "estimatedTotal": 5200000,
+    "range": {
+      "min": 4800000,
+      "max": 6000000
+    },
+    "breakdown": [
+      {
+        "category": "Platform Development",
+        "amount": 2800000
+      },
+      {
+        "category": "Infrastructure & Cloud Services",
+        "amount": 1200000
+      },
+      {
+        "category": "Third-Party Integrations",
+        "amount": 600000
+      },
+      {
+        "category": "AI/ML Recommendation Engine",
+        "amount": 400000
+      },
+      {
+        "category": "Testing & QA",
+        "amount": 200000
+      }
+    ]
+  },
+  "timeline": {
+    "startDate": "2024-02-01",
+    "endDate": "2025-03-31",
+    "duration": {
+      "value": 14,
+      "unit": "months"
+    },
+    "milestones": [
+      {
+        "name": "Architecture & Design Complete",
+        "date": "2024-04-30",
+        "deliverables": ["Microservices architecture design", "API specifications", "UI/UX wireframes"]
+      },
+      {
+        "name": "MVP Launch (Basic E-Commerce)",
+        "date": "2024-08-31",
+        "deliverables": ["Product catalog", "Shopping cart", "Checkout", "Payment integration"]
+      },
+      {
+        "name": "BOPIS Features Launch",
+        "date": "2024-11-15",
+        "deliverables": ["Store inventory integration", "BOPIS checkout flow", "In-store pickup notifications"]
+      },
+      {
+        "name": "Full Platform Launch",
+        "date": "2025-03-31",
+        "deliverables": ["AI recommendations", "Full feature set", "Performance optimization", "Load testing"]
+      }
+    ]
+  },
+  "technologies": [
+    {
+      "name": "React",
+      "category": "Framework",
+      "version": "18.x",
+      "purpose": "Frontend framework for web application"
+    },
+    {
+      "name": "Node.js",
+      "category": "Framework",
+      "version": "20.x LTS",
+      "purpose": "Backend API services"
+    },
+    {
+      "name": "MongoDB",
+      "category": "Database",
+      "version": "7.x",
+      "purpose": "Product catalog and customer data"
+    },
+    {
+      "name": "PostgreSQL",
+      "category": "Database",
+      "version": "16.x",
+      "purpose": "Order and transaction data"
+    },
+    {
+      "name": "Kubernetes",
+      "category": "DevOps Tool",
+      "version": "1.28+",
+      "purpose": "Container orchestration"
+    },
+    {
+      "name": "AWS",
+      "category": "Cloud Platform",
+      "version": "N/A",
+      "purpose": "Cloud hosting infrastructure"
+    },
+    {
+      "name": "Stripe",
+      "category": "Integration",
+      "version": "Latest API",
+      "purpose": "Payment processing"
+    },
+    {
+      "name": "Elasticsearch",
+      "category": "Other",
+      "version": "8.x",
+      "purpose": "Product search engine"
+    },
+    {
+      "name": "TensorFlow",
+      "category": "Framework",
+      "version": "2.x",
+      "purpose": "AI/ML recommendation engine"
+    }
+  ],
+  "risks": [
+    {
+      "description": "Integration with legacy in-store systems may be more complex than expected",
+      "impact": "high",
+      "probability": "medium",
+      "mitigation": "Early proof-of-concept integration testing; dedicated integration team"
+    },
+    {
+      "description": "Traffic spike during Black Friday/Cyber Monday could exceed capacity",
+      "impact": "critical",
+      "probability": "medium",
+      "mitigation": "Extensive load testing; auto-scaling configuration; CDN optimization"
+    },
+    {
+      "description": "Data migration from legacy platform could result in data loss or corruption",
+      "impact": "high",
+      "probability": "low",
+      "mitigation": "Phased migration approach; extensive testing; rollback procedures"
+    }
+  ],
+  "complianceRequirements": [
+    "PCI-DSS",
+    "GDPR",
+    "CCPA",
+    "ADA Compliance (Accessibility)"
+  ],
+  "dateCreated": "2024-01-08T11:30:00Z",
+  "dateModified": "2024-01-22T09:15:00Z",
+  "version": "1.5",
+  "status": "approved",
+  "author": {
+    "name": "Chris Patterson",
+    "email": "cpatterson@nationalretail.com",
+    "organization": "National Retail Chain"
+  },
+  "tags": [
+    "e-commerce",
+    "retail",
+    "microservices",
+    "omnichannel",
+    "bopis",
+    "kubernetes",
+    "aws",
+    "ai-recommendations"
+  ],
+  "relatedDocuments": [
+    "SOR-2023-0112",
+    "SOR-2024-0033",
+    "SOR-2024-0034"
+  ],
+  "searchMetadata": {
+    "keyTerms": [
+      "e-commerce",
+      "retail",
+      "microservices",
+      "omnichannel",
+      "BOPIS",
+      "buy online pickup in store",
+      "kubernetes",
+      "scalability",
+      "AI recommendations",
+      "product catalog",
+      "payment integration",
+      "mobile-first"
+    ],
+    "lastIndexed": "2024-01-22T10:00:00Z"
+  }
+}
