@@ -1,7 +1,18 @@
 """
 Example API Implementation for SOR Document Retrieval
-This is a reference implementation showing how to implement the API endpoints
-defined in actions/SORDocumentActions.yaml
+
+⚠️  IMPORTANT: This is a REFERENCE IMPLEMENTATION for development and testing only!
+    
+    For production use:
+    - Remove debug mode (FLASK_DEBUG=False)
+    - Implement proper authentication and authorization
+    - Use a real database instead of in-memory storage
+    - Add rate limiting and input validation
+    - Use a production WSGI server (gunicorn, uwsgi)
+    - Follow security best practices in docs/Deployment-Guide.md
+    
+This example shows how to implement the API endpoints defined in 
+actions/SORDocumentActions.yaml with Azure OpenAI integration.
 """
 
 from flask import Flask, request, jsonify
@@ -226,8 +237,13 @@ def search_similar_documents():
         })
     
     except Exception as e:
+        # Log the full error for debugging
         print(f"Error in search: {e}")
-        return jsonify({"error": str(e)}), 500
+        import traceback
+        traceback.print_exc()
+        
+        # Return generic error message to user (don't expose stack traces)
+        return jsonify({"error": "An error occurred while searching for documents. Please try again."}), 500
 
 
 @app.route('/api/documents/<document_id>/details', methods=['GET'])
@@ -300,8 +316,13 @@ def get_document_details(document_id):
         return jsonify(response)
     
     except Exception as e:
+        # Log the full error for debugging
         print(f"Error getting document details: {e}")
-        return jsonify({"error": str(e)}), 500
+        import traceback
+        traceback.print_exc()
+        
+        # Return generic error message to user (don't expose stack traces)
+        return jsonify({"error": "An error occurred while retrieving document details. Please try again."}), 500
 
 
 @app.route('/api/documents/upload', methods=['POST'])
@@ -355,8 +376,13 @@ def upload_document():
         }), 201
     
     except Exception as e:
+        # Log the full error for debugging
         print(f"Error uploading document: {e}")
-        return jsonify({"error": str(e)}), 500
+        import traceback
+        traceback.print_exc()
+        
+        # Return generic error message to user (don't expose stack traces)
+        return jsonify({"error": "An error occurred while uploading the document. Please try again."}), 500
 
 
 @app.route('/health', methods=['GET'])
@@ -377,4 +403,8 @@ if __name__ == '__main__':
     
     # Run Flask app
     port = int(os.getenv('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    debug_mode = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
+    
+    # WARNING: Never set FLASK_DEBUG=True in production!
+    # Debug mode allows arbitrary code execution and should only be used in development
+    app.run(host='0.0.0.0', port=port, debug=debug_mode)
